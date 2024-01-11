@@ -18,6 +18,7 @@ function App() {
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
+    socket.on("chat message", () => setCount((count) => count + 1));
 
     return () => {
       socket.off("connect", onConnect);
