@@ -10,7 +10,7 @@ function App() {
 
   const handleClick = () => {
     setCount((count) => count + 1);
-    socket.emit("chat message", count + 1);
+    socket.emit("refetchQueue", count + 1);
   };
 
   useEffect(() => {
@@ -24,7 +24,12 @@ function App() {
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("chat message", () => setCount((count) => count + 1));
+    socket.on("refetchQueue", (update: { refetch: string }) => {
+      console.log("update", update);
+      if (update.refetch === "testing") {
+        setCount((count) => count + 1);
+      }
+    });
 
     return () => {
       socket.off("connect", onConnect);
