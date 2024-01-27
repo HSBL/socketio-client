@@ -7,6 +7,12 @@ import { socket } from "./socket";
 function App() {
   const [count, setCount] = useState(0);
   const [isConnected, setIsConnected] = useState(socket.connected);
+
+  const handleClick = () => {
+    setCount((count) => count + 1);
+    socket.emit("chat message", count + 1);
+  };
+
   useEffect(() => {
     function onConnect() {
       setIsConnected(true);
@@ -37,11 +43,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        {isConnected && (
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-          </button>
-        )}
+        {isConnected && <button onClick={handleClick}>count is {count}</button>}
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
